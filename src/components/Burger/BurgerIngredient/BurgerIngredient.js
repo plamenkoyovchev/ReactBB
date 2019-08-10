@@ -17,7 +17,6 @@ const burgerIngredient = (props) => {
                 </div>
             );
         }
-        ingredient = ingredientTypeToCssClass[props.ingredientType];
     }
 
     return ingredient;
