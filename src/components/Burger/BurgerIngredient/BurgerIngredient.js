@@ -31,7 +31,7 @@ const ingredientTypeToCssClass = {
     "salad": classes.Salad
 };
 
-const propTypes = {
+burgerIngredient.propTypes = {
     ingredientType: PropTypes.string.isRequired
 };
 
