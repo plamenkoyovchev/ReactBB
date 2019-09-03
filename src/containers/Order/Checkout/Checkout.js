@@ -5,11 +5,21 @@ import CheckoutSummary from '../../../components/Burger/CheckoutSummary/Checkout
 class Checkout extends Component {
     state = {
         ingredients: {
-            meat: 1,
-            salad: 1,
-            cheese: 1,
-            bacon: 1
+            meat: 0,
+            salad: 0,
+            cheese: 0,
+            bacon: 0
         }
+    }
+
+    componentDidMount() {
+        const ingredients = {};
+        const queryParams = new URLSearchParams(this.props.location.search);
+        for (let qp of queryParams.entries()) {
+            ingredients[qp[0]] = +qp[1];
+        }
+
+        this.setState({ ingredients: ingredients });
     }
 
     checkoutCancelled = () => {
