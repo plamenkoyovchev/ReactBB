@@ -5,7 +5,7 @@ import NavigationItems from '../NavigationItems/NavigationItems';
 
 import classes from './Sidedrawer.css';
 
-import Aux from '../../../hoc/Aux';
+import Auxilary from '../../../hoc/Auxilary';
 import Backdrop from '../../UI/Backdrop/Backdrop';
 
 const sidedrawer = (props) => {
@@ -15,7 +15,7 @@ const sidedrawer = (props) => {
     }
 
     return (
-        <Aux>
+        <Auxilary>
             <Backdrop show={props.open} clicked={props.closed} />
             <div className={attachedClasses.join(' ')}>
                 <div className={classes.Logo}>
@@ -25,7 +25,7 @@ const sidedrawer = (props) => {
                     <NavigationItems />
                 </nav>
             </div>
-        </Aux>
+        </Auxilary>
     );
 };
 
