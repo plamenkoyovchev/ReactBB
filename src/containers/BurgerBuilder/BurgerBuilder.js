@@ -10,8 +10,6 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
-import Checkout from '../Order/Checkout/Checkout';
-
 const INGREDIENT_PRICES = {
     salad: 0.7,
     bacon: 0.8,
