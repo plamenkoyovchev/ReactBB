@@ -33,7 +33,7 @@ class Orders extends Component {
 
     render() {
         let orders = this.state.orders.map(o => {
-            return <Order key={o.id} ingredients={o.ingredients} price={o.price} />;
+            return <Order key={o.id} ingredients={o.ingredients} price={+o.price} />;
         });
 
         if (this.state.loading) {
