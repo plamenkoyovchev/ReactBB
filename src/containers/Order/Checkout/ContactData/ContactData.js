@@ -47,6 +47,19 @@ class ContactData extends Component {
                     placeholder: 'Enter postal code'
                 },
                 value: ''
+            },
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfig: {
+                    options: [{
+                        value: 'standard',
+                        displayValue: 'Standard delivery'
+                    }, {
+                        value: 'fast',
+                        displayValue: 'Fast delivery'
+                    }]
+                },
+                value: 'standard'
             }
         },
         loading: false
