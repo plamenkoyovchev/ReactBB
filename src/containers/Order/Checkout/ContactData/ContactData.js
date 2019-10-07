@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import axios from '../../../../axios-orders';
 import Button from '../../../../components/UI/Button/Button';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
+import Input from '../../../../components/UI/Input/Input';
+
 import classes from './ContactData.css';
 
 class ContactData extends Component {
@@ -92,13 +94,33 @@ class ContactData extends Component {
             });
     }
 
+    inputChangedHandler = (event) => {
+
+    }
+
     render() {
+        const formConfig = [];
+        for (let key in this.state.orderForm) {
+            formConfig.push({
+                id: key,
+                elementType: this.state.orderForm[key].elementType,
+                elementConfig: this.state.orderForm[key].elementConfig,
+                value: this.state.orderForm[key].value
+            });
+        }
+
+        const formElements = formConfig.map((el) => {
+            return <Input
+                key={el.id}
+                elementType={el.elementType}
+                elementConfig={el.elementConfig}
+                value={el.value}
+                changed={this.inputChangedHandler} />
+        });
+
         let form = (
             <form>
-                <input className={classes.Input} type="text" name="name" placeholder="enter your name" />
-                <input className={classes.Input} type="email" name="email" placeholder="enter your email" />
-                <input className={classes.Input} type="text" name="street" placeholder="enter your street" />
-                <input className={classes.Input} type="text" name="postal" placeholder="enter your postal code" />
+                {formElements}
                 <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
             </form>
         );
