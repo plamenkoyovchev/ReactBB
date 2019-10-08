@@ -179,9 +179,9 @@ class ContactData extends Component {
         });
 
         let form = (
-            <form>
+            <form onSubmit={this.orderHandler}>
                 {formElements}
-                <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
+                <Button btnType="Success">ORDER</Button>
             </form>
         );
         if (this.state.loading) {
