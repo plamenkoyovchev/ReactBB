@@ -69,18 +69,15 @@ class ContactData extends Component {
 
     orderHandler = (event) => {
         event.preventDefault();
+        const formData = {};
+        for (const key in this.state.orderForm) {
+            formData[key] = this.state.orderForm[key].value;
+        }
+
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.price,
-            customer: {
-                name: 'Plamen Yovchev',
-                address: {
-                    street: 'kalchev',
-                    city: 'Sofia',
-                    postCode: '1618'
-                },
-                email: 'test@test.com'
-            }
+            orderData: formData
         };
 
         this.setState({ loading: true });
@@ -94,8 +91,18 @@ class ContactData extends Component {
             });
     }
 
-    inputChangedHandler = (event) => {
+    inputChangedHandler = (event, inputId) => {
+        const formToUpdate = {
+            ...this.state.orderForm
+        };
+        const elementToUpdate = {
+            ...formToUpdate[inputId]
+        };
 
+        elementToUpdate.value = event.target.value;
+        formToUpdate[inputId] = elementToUpdate;
+
+        this.setState({ orderForm: formToUpdate });
     }
 
     render() {
@@ -115,7 +122,7 @@ class ContactData extends Component {
                 elementType={el.elementType}
                 elementConfig={el.elementConfig}
                 value={el.value}
-                changed={this.inputChangedHandler} />
+                changed={(event) => this.inputChangedHandler(event, el.id)} />
         });
 
         let form = (
