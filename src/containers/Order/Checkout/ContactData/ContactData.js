@@ -9,6 +9,7 @@ import classes from './ContactData.css';
 
 class ContactData extends Component {
     state = {
+        formIsValid: false,
         orderForm: {
             name: {
                 elementType: 'input',
@@ -149,8 +150,13 @@ class ContactData extends Component {
         elementToUpdate.valid = this.checkValidity(event.target.value, elementToUpdate.validation);
         elementToUpdate.touched = true;
         formToUpdate[inputId] = elementToUpdate;
-        console.log(elementToUpdate);
-        this.setState({ orderForm: formToUpdate });
+
+        let formIsValid = true;
+        for (let key in formToUpdate) {
+            formIsValid = formIsValid && formToUpdate[key].valid;
+        }
+
+        this.setState({ orderForm: formToUpdate, formIsValid: formIsValid });
     }
 
     render() {
@@ -181,7 +187,7 @@ class ContactData extends Component {
         let form = (
             <form onSubmit={this.orderHandler}>
                 {formElements}
-                <Button btnType="Success">ORDER</Button>
+                <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
             </form>
         );
         if (this.state.loading) {
