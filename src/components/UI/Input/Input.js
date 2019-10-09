@@ -10,7 +10,9 @@ const generateElement = function (props) {
     const inputClasses = [classes.InputElement];
     let element = '';
 
+    let validationMessage = null;
     if (props.shouldValidate && props.invalid) {
+        validationMessage = <p className={classes.ValidationMessage}>{props.validationMessage}</p>;
         inputClasses.push(classes.Invalid);
     }
 
@@ -35,6 +37,7 @@ const generateElement = function (props) {
         <div className={classes.Input}>
             <label className={classes.Label}>{props.label}</label>
             {element}
+            {validationMessage}
         </div>);
 };
 

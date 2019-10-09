@@ -30,3 +30,8 @@
     border: 1px solid red;
     background-color: salmon;
 }
+
+.ValidationMessage {
+    color: red;
+    margin: 0 5px;
+}

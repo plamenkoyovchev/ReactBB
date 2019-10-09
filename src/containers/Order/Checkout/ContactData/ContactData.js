@@ -20,7 +20,8 @@ class ContactData extends Component {
                 validation: {
                     required: true,
                     minLength: 2,
-                    maxLength: 20
+                    maxLength: 20,
+                    message: 'Name should be between 2 and 20 symbols'
                 },
                 value: '',
                 valid: false,
@@ -35,7 +36,8 @@ class ContactData extends Component {
                 validation: {
                     required: true,
                     minLength: 2,
-                    maxLength: 20
+                    maxLength: 20,
+                    message: 'Email should be between 2 and 20 symbols'
                 },
                 value: '',
                 valid: false,
@@ -181,6 +183,7 @@ class ContactData extends Component {
                 value={el.value}
                 invalid={!el.valid}
                 shouldValidate={el.validation && el.touched}
+                validationMessage={el.validation ? el.validation.message : null}
                 changed={(event) => this.inputChangedHandler(event, el.id)} />
         });
 
