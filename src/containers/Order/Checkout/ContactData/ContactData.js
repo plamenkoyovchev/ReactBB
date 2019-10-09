@@ -50,7 +50,7 @@ class ContactData extends Component {
                     placeholder: 'Enter your country'
                 },
                 value: '',
-                valid: false,
+                valid: true,
                 touched: false
             },
             street: {
@@ -60,7 +60,7 @@ class ContactData extends Component {
                     placeholder: 'Enter your street'
                 },
                 value: '',
-                valid: false,
+                valid: true,
                 touched: false
             },
             postal: {
@@ -70,7 +70,7 @@ class ContactData extends Component {
                     placeholder: 'Enter postal code'
                 },
                 value: '',
-                valid: false,
+                valid: true,
                 touched: false
             },
             deliveryMethod: {
@@ -155,7 +155,7 @@ class ContactData extends Component {
 
         let formIsValid = true;
         for (let key in formToUpdate) {
-            formIsValid = formIsValid && formToUpdate[key].valid;
+            formIsValid = formIsValid && this.checkValidity(formToUpdate[key].value, formToUpdate[key].validation);
         }
 
         this.setState({ orderForm: formToUpdate, formIsValid: formIsValid });
@@ -190,7 +190,7 @@ class ContactData extends Component {
         let form = (
             <form onSubmit={this.orderHandler}>
                 {formElements}
-                <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
+                <Button btnType="Success" type="submit" disabled={!this.state.formIsValid}>ORDER</Button>
             </form>
         );
         if (this.state.loading) {
