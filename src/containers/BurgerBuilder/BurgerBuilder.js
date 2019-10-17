@@ -5,6 +5,7 @@ import Auxilary from '../../hoc/Auxilary';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 import { connect } from 'react-redux';
+import * as actionTypes from '../../store/actions';
 
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
@@ -115,8 +116,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdd: (ingredientName) => dispatch({ type: 'ADD_INGREDIENT', ingredientName: ingredientName }),
-        onIngredientRemove: (ingredientName) => dispatch({ type: 'REMOVE_INGREDIENT', ingredientName: ingredientName })
+        onIngredientAdd: (ingredientName) => dispatch({ type: actionTypes.ADD_INGREDIENT, ingredientName: ingredientName }),
+        onIngredientRemove: (ingredientName) => dispatch({ type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingredientName })
     }
 };
 
