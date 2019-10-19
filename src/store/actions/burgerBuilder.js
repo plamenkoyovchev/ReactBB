@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+import * as ingredientPrices from './ingredientPrices';
 import axios from '../../axios-orders';
 
 export const addIngredient = (ingredientName) => {
@@ -15,10 +16,11 @@ export const removeIngredient = (ingredientName) => {
     };
 };
 
-const setIngredients = (ingredients) => {
+const setIngredients = (ingredients, totalPrice) => {
     return {
         type: actionTypes.SET_INGREDIENTS,
-        ingredients: ingredients
+        ingredients: ingredients,
+        totalPrice: totalPrice
     };
 };
 
@@ -32,7 +34,12 @@ export const initIngredients = () => {
     return dispatch => {
         axios.get('/ingredients.json')
             .then(response => {
-                dispatch(setIngredients(response.data));
+                let totalPrice = 0;
+                for (let key in response.data) {
+                    totalPrice += (response.data[key] * ingredientPrices.PRICES[key]);
+                }
+
+                dispatch(setIngredients(response.data, totalPrice));
             })
             .catch(error => {
                 dispatch(fetchIngredientsFailed());
