@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import * as ingredientPrices from './ingredientPrices';
+import { INGREDIENT_PRICES } from './ingredientPrices';
 import axios from '../../axios-orders';
 
 export const addIngredient = (ingredientName) => {
@@ -36,7 +36,7 @@ export const initIngredients = () => {
             .then(response => {
                 let totalPrice = 0;
                 for (let key in response.data) {
-                    totalPrice += (response.data[key] * ingredientPrices.PRICES[key]);
+                    totalPrice += (response.data[key] * INGREDIENT_PRICES[key]);
                 }
 
                 dispatch(setIngredients(response.data, totalPrice));

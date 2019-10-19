@@ -1,4 +1,4 @@
-export const PRICES = {
+export const INGREDIENT_PRICES = {
     salad: 0.7,
     bacon: 0.8,
     meat: 1.4,
