@@ -15,10 +15,16 @@ export const removeIngredient = (ingredientName) => {
     };
 };
 
-export const setIngredients = (ingredients) => {
+const setIngredients = (ingredients) => {
     return {
         type: actionTypes.SET_INGREDIENTS,
         ingredients: ingredients
+    };
+};
+
+const fetchIngredientsFailed = () => {
+    return {
+        type: actionTypes.FETCH_INGREDIENTS_FAILED
     };
 };
 
@@ -29,7 +35,7 @@ export const initIngredients = () => {
                 dispatch(setIngredients(response.data));
             })
             .catch(error => {
-                // TODO: move error handling in redux store
+                dispatch(fetchIngredientsFailed());
             });
     };
 };

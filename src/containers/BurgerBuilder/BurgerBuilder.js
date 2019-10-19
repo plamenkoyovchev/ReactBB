@@ -18,8 +18,7 @@ class BurgerBuilder extends Component {
         super(props);
         this.state = {
             purchasing: false,
-            loading: false,
-            error: false
+            loading: false
         };
     }
 
@@ -61,7 +60,7 @@ class BurgerBuilder extends Component {
         }
 
         let orderSummary = null;
-        let burger = this.state.error
+        let burger = this.props.error
             ? <p style={{ textAlign: 'center' }}>Ingredients can't be loaded...!</p>
             : <Spinner />;
 
@@ -104,7 +103,8 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
     return {
         ingredients: state.ingredients,
-        totalPrice: state.totalPrice
+        totalPrice: state.totalPrice,
+        error: state.error
     }
 };
 
