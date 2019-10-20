@@ -6,6 +6,7 @@ import Spinner from '../../../../components/UI/Spinner/Spinner';
 import Input from '../../../../components/UI/Input/Input';
 
 import { connect } from 'react-redux';
+import * as orderActions from '../../../../store/actions/index';
 
 import withErrorHandler from '../../../../hoc/withErrorHandler/withErrorHandler';
 
@@ -95,8 +96,7 @@ class ContactData extends Component {
                 valid: false,
                 touched: false
             }
-        },
-        loading: false
+        }
     };
 
     orderHandler = (event) => {
@@ -111,6 +111,8 @@ class ContactData extends Component {
             price: this.props.price.toFixed(2),
             orderData: formData
         };
+
+        this.props.onOrderBurger(order);
     }
 
     checkValidity(value, rules) {
@@ -187,7 +189,7 @@ class ContactData extends Component {
                 <Button btnType="Success" type="submit" disabled={!this.state.formIsValid}>ORDER</Button>
             </form>
         );
-        if (this.state.loading) {
+        if (this.props.loading) {
             form = <Spinner />;
         }
 
@@ -203,8 +205,15 @@ class ContactData extends Component {
 const mapStateToProps = state => {
     return {
         ingredients: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        loading: state.loading
     };
 };
 
-export default connect(mapStateToProps)(withErrorHandler(ContactData, axios));
+const mapDispatchToProps = dispatch => {
+    return {
+        onOrderBurger: (orderData) => dispatch(orderActions.purchaseBurger(orderData))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));
