@@ -5,6 +5,10 @@ import Button from '../../../../components/UI/Button/Button';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
 import Input from '../../../../components/UI/Input/Input';
 
+import { connect } from 'react-redux';
+
+import withErrorHandler from '../../../../hoc/withErrorHandler/withErrorHandler';
+
 import classes from './ContactData.css';
 
 class ContactData extends Component {
@@ -107,16 +111,6 @@ class ContactData extends Component {
             price: this.props.price.toFixed(2),
             orderData: formData
         };
-
-        this.setState({ loading: true });
-        axios.post('/orders.json', order)
-            .then(response => {
-                this.setState({ loading: false });
-                this.props.history.push('/');
-            })
-            .catch(error => {
-                this.setState({ loading: false })
-            });
     }
 
     checkValidity(value, rules) {
@@ -206,4 +200,11 @@ class ContactData extends Component {
     }
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+    return {
+        ingredients: state.ingredients,
+        price: state.totalPrice
+    };
+};
+
+export default connect(mapStateToProps)(withErrorHandler(ContactData, axios));
