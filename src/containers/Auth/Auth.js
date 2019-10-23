@@ -5,6 +5,9 @@ import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
+
 class Auth extends Component {
     state = {
         formIsValid: false,
@@ -38,8 +41,7 @@ class Auth extends Component {
                 valid: false,
                 touched: false
             }
-        },
-        loading: false
+        }
     }
 
     checkValidity = (value, rules) => {
@@ -81,7 +83,8 @@ class Auth extends Component {
 
     onSignUpHandler = (event) => {
         event.preventDefault();
-        this.setState({ loading: true });
+
+        this.props.auth(this.state.authForm.email.value, this.state.authForm.password.value);
     }
 
     render() {
@@ -119,7 +122,7 @@ class Auth extends Component {
                 <Button btnType="Success" type="submit" disabled={!this.state.formIsValid}>SIGN UP</Button>
             </form>
         );
-        if (this.state.loading) {
+        if (this.props.loading) {
             form = <Spinner />;
         }
 
@@ -131,4 +134,16 @@ class Auth extends Component {
     };
 }
 
-export default Auth;
+const mapStateToProps = state => {
+    return {
+        loading: state.auth.loading
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        auth: (email, password) => dispatch(actions.auth(email, password))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);
