@@ -41,7 +41,8 @@ class Auth extends Component {
                 valid: false,
                 touched: false
             }
-        }
+        },
+        signUp: false
     }
 
     checkValidity = (value, rules) => {
@@ -81,10 +82,18 @@ class Auth extends Component {
         this.setState({ authForm: formToUpdate, formIsValid: formIsValid });
     }
 
-    onSignUpHandler = (event) => {
+    onAuthSubmitHandler = (event) => {
         event.preventDefault();
 
-        this.props.auth(this.state.authForm.email.value, this.state.authForm.password.value);
+        this.props.auth(this.state.authForm.email.value, this.state.authForm.password.value, this.state.signUp);
+    }
+
+    changeAuthModeHandler = () => {
+        this.setState((oldState) => {
+            return {
+                signUp: !oldState.signUp
+            };
+        });
     }
 
     render() {
@@ -117,10 +126,15 @@ class Auth extends Component {
         });
 
         let form = (
-            <form onSubmit={this.onSignUpHandler}>
-                {formElements}
-                <Button btnType="Success" type="submit" disabled={!this.state.formIsValid}>SIGN UP</Button>
-            </form>
+            <div>
+                <form onSubmit={this.onAuthSubmitHandler}>
+                    {formElements}
+                    <Button btnType="Success" type="submit" disabled={!this.state.formIsValid}>Submit</Button>
+                </form>
+                <Button btnType="Normal" clicked={this.changeAuthModeHandler}>
+                    {this.state.signUp ? "Switch to Sign In" : "Switch to Sign Up"}
+                </Button>
+            </div>
         );
         if (this.props.loading) {
             form = <Spinner />;
@@ -142,7 +156,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        auth: (email, password) => dispatch(actions.auth(email, password))
+        auth: (email, password, signUp) => dispatch(actions.auth(email, password, signUp))
     }
 };
 
