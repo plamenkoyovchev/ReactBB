@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import classes from './Auth.css';
 
+import { Redirect } from 'react-router-dom';
+
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -97,6 +99,10 @@ class Auth extends Component {
     }
 
     render() {
+        if (this.props.isLoggedIn) {
+            return <Redirect to="/" />;
+        }
+
         const formConfig = [];
         for (let key in this.state.authForm) {
             const element = this.state.authForm[key];
@@ -157,14 +163,15 @@ class Auth extends Component {
 const mapStateToProps = state => {
     return {
         loading: state.auth.loading,
-        error: state.auth.error
+        error: state.auth.error,
+        isLoggedIn: state.auth.token !== null
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         auth: (email, password, signUp) => dispatch(actions.auth(email, password, signUp))
-    }
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);
