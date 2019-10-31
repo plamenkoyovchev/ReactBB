@@ -7,6 +7,8 @@ import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
+import { checkValidity } from '../../store/utility';
+
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
@@ -53,23 +55,6 @@ class Auth extends Component {
         }
     }
 
-    checkValidity = (value, rules) => {
-        let isValid = true;
-        if (!rules) {
-            return isValid;
-        }
-
-        if (rules.required) {
-            isValid = isValid && value !== '' && value.trim() !== '';
-        }
-
-        if (rules.minLength) {
-            isValid = isValid && value !== '' && value.length >= rules.minLength;
-        }
-
-        return isValid;
-    }
-
     inputChangedHandler = (event, inputId) => {
         const formToUpdate = {
             ...this.state.authForm
@@ -78,13 +63,13 @@ class Auth extends Component {
             ...formToUpdate[inputId]
         };
         elementToUpdate.value = event.target.value;
-        elementToUpdate.valid = this.checkValidity(event.target.value, elementToUpdate.validation);
+        elementToUpdate.valid = checkValidity(event.target.value, elementToUpdate.validation);
         elementToUpdate.touched = true;
         formToUpdate[inputId] = elementToUpdate;
 
         let formIsValid = true;
         for (let key in formToUpdate) {
-            formIsValid = formIsValid && this.checkValidity(formToUpdate[key].value, formToUpdate[key].validation);
+            formIsValid = formIsValid && checkValidity(formToUpdate[key].value, formToUpdate[key].validation);
         }
 
         this.setState({ authForm: formToUpdate, formIsValid: formIsValid });
