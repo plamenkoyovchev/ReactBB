@@ -1,14 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
+
 import Layout from './components/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
-import Checkout from './containers/Order/Checkout/Checkout';
-import Orders from './containers/Order/Orders';
-import Auth from './containers/Auth/Auth';
-import Logout from './containers/Auth/Logout/Logout';
 
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
+
+const Checkout = React.lazy(() => {
+  return import('./containers/Order/Checkout/Checkout');
+});
+
+const Orders = React.lazy(() => {
+  return import('./containers/Order/Orders');
+});
+
+const Auth = React.lazy(() => {
+  return import('./containers/Auth/Auth');
+});
+
+const Logout = React.lazy(() => {
+  return import('./containers/Auth/Logout/Logout');
+});
 
 class App extends Component {
   componentDidMount() {
@@ -40,7 +53,9 @@ class App extends Component {
     return (
       <div>
         <Layout>
-          {routes}
+          <Suspense fallback="Loading...">
+            {routes}
+          </Suspense>
         </Layout>
       </div>
     );
