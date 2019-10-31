@@ -7,7 +7,7 @@ import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
-import { checkValidity } from '../../store/utility';
+import { checkValidity } from '../../shared/utility';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';

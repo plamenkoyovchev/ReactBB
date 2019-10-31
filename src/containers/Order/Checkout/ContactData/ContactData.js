@@ -7,7 +7,7 @@ import Input from '../../../../components/UI/Input/Input';
 
 import { connect } from 'react-redux';
 import * as orderActions from '../../../../store/actions/index';
-import { checkValidity } from '../../../../store/utility';
+import { checkValidity } from '../../../../shared/utility';
 
 import withErrorHandler from '../../../../hoc/withErrorHandler/withErrorHandler';
 
