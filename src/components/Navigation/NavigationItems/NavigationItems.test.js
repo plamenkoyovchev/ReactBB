@@ -9,8 +9,17 @@ import NavigationItem from './NavigationItem/NavigationItem';
 configure({ adapter: new Adapter() });
 
 describe('<NavigationItems />', () => {
+    let wrapper;
+    beforeEach(() => {
+        wrapper = shallow(<NavigationItems />);
+    });
+
     it('should render two <NavigationItem /> elements if not authenticated', () => {
-        const wrapper = shallow(<NavigationItems />);
         expect(wrapper.find(NavigationItem)).toHaveLength(2);
+    });
+
+    it('should have three <NavigationItem /> elements if is authenticated', () => {
+        wrapper.setProps({ isLoggedIn: true });
+        expect(wrapper.find(NavigationItem)).toHaveLength(3);
     });
 });
