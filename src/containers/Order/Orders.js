@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 
 import axios from '../../axios-orders';
 import Order from '../../components/Order/Order';
@@ -8,26 +8,26 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
-class Orders extends Component {
-    componentDidMount() {
-        this.props.fetchOrders(this.props.token, this.props.userId);
+const orders = props => {
+    const { fetchOrders } = props;
+
+    useEffect(() => {
+        fetchOrders(props.token, props.userId);
+    }, [fetchOrders]);
+
+    let orders = props.orders.map(o => {
+        return <Order key={o.id} ingredients={o.ingredients} price={+o.price} />;
+    });
+
+    if (props.loading) {
+        orders = <Spinner />
     }
 
-    render() {
-        let orders = this.props.orders.map(o => {
-            return <Order key={o.id} ingredients={o.ingredients} price={+o.price} />;
-        });
-
-        if (this.props.loading) {
-            orders = <Spinner />
-        }
-
-        return (
-            <div>
-                {orders}
-            </div>
-        );
-    }
+    return (
+        <div>
+            {orders}
+        </div>
+    );
 }
 
 const mapStateToProps = state => {
@@ -45,4 +45,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(orders, axios));
