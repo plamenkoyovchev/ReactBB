@@ -1,4 +1,4 @@
-import React, { Component, Suspense } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
@@ -23,43 +23,42 @@ const Logout = React.lazy(() => {
   return import('./containers/Auth/Logout/Logout');
 });
 
-class App extends Component {
-  componentDidMount() {
-    this.props.onTryAutoSignUp();
-  }
+const app = (props) => {
+  const { onTryAutoSignUp } = props;
+  useEffect(() => {
+    onTryAutoSignUp();
+  }, [onTryAutoSignUp]);
 
-  render() {
-    let routes = (
+  let routes = (
+    <Switch>
+      <Route path="/auth" component={Auth} />
+      <Route path="/" exact component={BurgerBuilder} />
+      <Redirect to="/" />
+    </Switch>
+  );
+
+  if (props.isLoggedIn) {
+    routes = (
       <Switch>
+        <Route path="/orders" component={Orders} />
+        <Route path="/checkout" component={Checkout} />
+        <Route path="/logout" component={Logout} />
         <Route path="/auth" component={Auth} />
         <Route path="/" exact component={BurgerBuilder} />
         <Redirect to="/" />
       </Switch>
     );
-
-    if (this.props.isLoggedIn) {
-      routes = (
-        <Switch>
-          <Route path="/orders" component={Orders} />
-          <Route path="/checkout" component={Checkout} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/auth" component={Auth} />
-          <Route path="/" exact component={BurgerBuilder} />
-          <Redirect to="/" />
-        </Switch>
-      );
-    }
-
-    return (
-      <div>
-        <Layout>
-          <Suspense fallback="Loading...">
-            {routes}
-          </Suspense>
-        </Layout>
-      </div>
-    );
   }
+
+  return (
+    <div>
+      <Layout>
+        <Suspense fallback="Loading...">
+          {routes}
+        </Suspense>
+      </Layout>
+    </div>
+  );
 }
 
 const mapStateToProps = state => {
@@ -74,4 +73,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(app));
