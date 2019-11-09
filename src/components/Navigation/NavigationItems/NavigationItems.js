@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Redirect } from 'react-router-dom';
-
 import classes from './NavigationItems.css';
 import NavigationItem from './NavigationItem/NavigationItem';
 
